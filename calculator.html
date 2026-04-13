@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator Tool | Monthly Loan EMI, Interest & Repayment Chart</title>
+  <meta name="description" content="Calculate monthly EMI for home, car, and personal loans. Get instant EMI results, total interest payable, total repayment, and a visual chart.">
+  <link rel="canonical" href="https://example.com/calculator.html">
+  <meta property="og:title" content="EMI Calculator Tool | Monthly Loan EMI, Interest & Repayment Chart">
+  <meta property="og:description" content="Free EMI calculator with instant results, charts, and loan repayment summary.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/calculator.html">
+  <meta property="og:image" content="https://example.com/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0d1b2a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EMI Calculator Tool",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://example.com/calculator.html",
+      "description": "EMI calculator for monthly loan repayment with chart output."
+    }
+  </script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html">EMI<span>Pro</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="calculator.html" aria-current="page">Tool</a>
+        <a href="examples.html">Examples</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </header>
+
+    <main class="tool-layout">
+      <section class="page-intro">
+        <p class="eyebrow">EMI calculator tool</p>
+        <h1>Find your monthly loan EMI instantly.</h1>
+        <p>Adjust the inputs below to calculate EMI, total interest, total repayment, and a simple principal vs interest chart.</p>
+      </section>
+
+      <section class="calculator-layout">
+        <div class="calculator-panel">
+          <form class="calculator-form" id="emi-form">
+            <label>
+              <span>Loan amount</span>
+              <div class="input-wrap">
+                <span>₹</span>
+                <input id="loan-amount" name="loan-amount" type="number" min="10000" step="10000" value="500000">
+              </div>
+            </label>
+
+            <label>
+              <span>Annual interest rate (%)</span>
+              <div class="input-wrap">
+                <input id="interest-rate" name="interest-rate" type="number" min="0.1" max="40" step="0.01" value="8.5">
+                <span>%</span>
+              </div>
+            </label>
+
+            <label>
+              <span>Loan tenure (years)</span>
+              <div class="input-wrap">
+                <input id="loan-tenure" name="loan-tenure" type="number" min="1" max="40" step="1" value="5">
+                <span>yrs</span>
+              </div>
+            </label>
+
+            <div class="range-block">
+              <div>
+                <span>Loan amount range</span>
+                <strong id="loan-amount-range-value">₹5,00,000</strong>
+              </div>
+              <input id="loan-amount-range" type="range" min="100000" max="10000000" step="50000" value="500000">
+            </div>
+
+            <div class="range-block">
+              <div>
+                <span>Interest rate range</span>
+                <strong id="interest-rate-range-value">8.50%</strong>
+              </div>
+              <input id="interest-rate-range" type="range" min="1" max="20" step="0.05" value="8.5">
+            </div>
+
+            <div class="range-block">
+              <div>
+                <span>Tenure range</span>
+                <strong id="loan-tenure-range-value">5 years</strong>
+              </div>
+              <input id="loan-tenure-range" type="range" min="1" max="30" step="1" value="5">
+            </div>
+
+            <div class="preset-row">
+              <button type="button" class="preset-button" data-loan="750000" data-rate="9.25" data-tenure="3">Bike Loan</button>
+              <button type="button" class="preset-button" data-loan="1200000" data-rate="10.5" data-tenure="5">Car Loan</button>
+              <button type="button" class="preset-button" data-loan="5500000" data-rate="8.35" data-tenure="20">Home Loan</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="results-panel">
+          <div class="results-grid">
+            <article class="result-card">
+              <span>Monthly EMI</span>
+              <strong id="emi-value">₹0</strong>
+            </article>
+            <article class="result-card">
+              <span>Total interest</span>
+              <strong id="interest-value">₹0</strong>
+            </article>
+            <article class="result-card">
+              <span>Total repayment</span>
+              <strong id="repayment-value">₹0</strong>
+            </article>
+            <article class="result-card">
+              <span>Total months</span>
+              <strong id="months-value">0</strong>
+            </article>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <h2>Repayment chart</h2>
+              <p>Principal and total interest across the full loan term.</p>
+            </div>
+            <canvas id="emi-chart" width="480" height="260" aria-label="EMI repayment chart" role="img"></canvas>
+            <div class="chart-legend">
+              <span><i class="legend-swatch principal"></i>Principal</span>
+              <span><i class="legend-swatch interest"></i>Interest</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <h2>Loan summary</h2>
+            <p id="summary-text">Your EMI summary will appear here.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 EMIPro. Estimate your monthly EMI with confidence.</p>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="examples.html">Examples</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
